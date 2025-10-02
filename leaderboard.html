@@ -189,7 +189,6 @@
                 borderFlow 1.5s ease-in-out infinite,
                 borderPulse 0.8s ease-in-out infinite alternate,
                 holoBorder 3s linear infinite;
-            pointer-events: none;
         }
        
         .tournament-board::after {
@@ -203,7 +202,6 @@
             background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.2), transparent);
             animation: outerGlow 3s ease-in-out infinite;
             z-index: -1;
-            pointer-events: none;
         }
        
         .player-section {
@@ -627,86 +625,6 @@
         .cyber-btn:hover::before {
             left: 100%;
         }
-
-        /* Light (white) theme overrides */
-        body.light {
-            background: #f5f5f5; /* light grey */
-        }
-
-        body.light::before {
-            content: '';
-        }
-
-        body.light .hologram-overlay,
-        body.light .floating-particles,
-        body.light .data-streams,
-        body.light .lightning-container {
-            display: block;
-        }
-
-        body.light .tournament-board {
-            background: #ffffff;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.08);
-            animation: none;
-        }
-
-        body.light .tournament-board::before,
-        body.light .tournament-board::after {
-            content: none;
-        }
-
-        body.light .title {
-            -webkit-text-fill-color: initial;
-            background: none;
-            color: #111827;
-            filter: none;
-            animation: none;
-        }
-
-        body.light .player-name.red-player,
-        body.light .player-name.blue-player {
-            text-shadow: none;
-        }
-
-        body.light .score-box {
-            background: #f9fafb;
-            border-color: rgba(0,0,0,0.08);
-        }
-
-        body.light .score-number {
-            color: #111827;
-            text-shadow: none;
-        }
-
-        body.light .reset-btn {
-            background: #ffffff;
-            color: #111827;
-            border: 1px solid #d1d5db;
-            box-shadow: none;
-        }
-
-        /* Theme toggle button */
-        .theme-toggle {
-            background: #ffffff;
-            color: #111827;
-            border: 1px solid #d1d5db;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            position: relative;
-            z-index: 50;
-        }
-
-        body.light .theme-toggle {
-            background: #111827;
-            color: #ffffff;
-            border-color: #111827;
-        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
@@ -723,10 +641,6 @@
     <div class="lightning-container" id="lightning"></div>
    
     <div class="tournament-board max-w-lg w-full relative">
-        <!-- Theme Toggle -->
-        <div class="flex justify-end mb-2">
-            <button id="themeToggle" class="theme-toggle">White Mode</button>
-        </div>
         <!-- Header -->
         <h1 class="title"> LEADERBOARD</h1>
        
@@ -798,27 +712,6 @@
             jijy: { wins: 0, losses: 0 },
             mayki: { wins: 0, losses: 0 }
         };
-
-        // Theme handling
-        function applyTheme(theme) {
-            const useLight = theme === 'light';
-            document.body.classList.toggle('light', useLight);
-            localStorage.setItem('theme', useLight ? 'light' : 'dark');
-            const toggle = document.getElementById('themeToggle');
-            if (toggle) toggle.textContent = useLight ? 'Dark Mode' : 'White Mode';
-        }
-
-        function initTheme() {
-            const saved = localStorage.getItem('theme') || 'dark';
-            applyTheme(saved);
-            const toggle = document.getElementById('themeToggle');
-            if (toggle) {
-                toggle.addEventListener('click', () => {
-                    const next = document.body.classList.contains('light') ? 'dark' : 'light';
-                    applyTheme(next);
-                });
-            }
-        }
 
         // Load scores
         function loadScores() {
@@ -1014,7 +907,6 @@
         }
        
         // Initialize on load
-        initTheme();
         loadScores();
         createParticles();
         createDataStreams();
